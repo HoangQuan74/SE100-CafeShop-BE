@@ -33,7 +33,7 @@ class ProductController extends Controller
         $product = Product::create($request->all());
 
         return response()->json($product)->setStatusCode(201);
-    }
+    } 
 
     public function update(StoreProductRequest $request, Product $product)
     {
@@ -50,24 +50,24 @@ class ProductController extends Controller
         $product->update($request->all());
 
         return response()->json($product);
-    }
+    } 
 
     public function show(Product $product)
     {
         return response()->json($product);
-    }
+    } 
 
     public function destroy(Product $product)
     {
         $product->delete();
 
         return response('Deleted successfully', 204);
-    }
+    } 
 
     public function destroyMultiple(MultipleDestroyRequest $request)
     {
         Product::destroy($request->ids);
 
         return response('Deleted successfully', 204);
-    }
+    } 
 }
