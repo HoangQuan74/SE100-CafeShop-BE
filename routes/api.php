@@ -28,12 +28,12 @@ Route::prefix('/v1')->group(function () {
             Route::delete('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'destroy']);
             Route::get('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'show']);
 
-            Route::get('/staffs', [\App\Http\Controllers\Api\StaffController::class, 'index']);
-            Route::post('/staffs', [\App\Http\Controllers\Api\StaffController::class, 'store']);
-            Route::put('/staffs/{staff}', [\App\Http\Controllers\Api\StaffController::class, 'update']);
-            Route::delete('/staffs/bulk-delete', [\App\Http\Controllers\Api\StaffController::class, 'destroyMultiple']);
-            Route::delete('/staffs/{staff}', [\App\Http\Controllers\Api\StaffController::class, 'destroy']);
-            Route::get('/staffs/{staff}', [\App\Http\Controllers\Api\StaffController::class, 'show']);
+            Route::get('/staffs', [\App\Http\Controllers\Api\StaffController::class, 'index']); 
+            Route::post('/staffs', [\App\Http\Controllers\Api\StaffController::class, 'store']); 
+            Route::put('/staffs/{staff}', [\App\Http\Controllers\Api\StaffController::class, 'update']); 
+            Route::delete('/staffs/bulk-delete', [\App\Http\Controllers\Api\StaffController::class, 'destroyMultiple']); 
+            Route::delete('/staffs/{staff}', [\App\Http\Controllers\Api\StaffController::class, 'destroy']); 
+            Route::get('/staffs/{staff}', [\App\Http\Controllers\Api\StaffController::class, 'show']); 
 
             Route::get('/invoices', [\App\Http\Controllers\Api\InvoiceController::class, 'index']);
             Route::put('/invoices/{invoice}', [\App\Http\Controllers\Api\InvoiceController::class, 'update']);

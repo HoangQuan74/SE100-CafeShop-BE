@@ -31,26 +31,26 @@ class StaffController extends Controller
         $staff = User::create($data);
 
         return response()->json($staff)->setStatusCode(201);
-    }
+    } 
 
     public function update(StoreStaffRequest $request, User $staff)
     {
         $staff->update($request->all());
 
         return response()->json($staff);
-    }
+    } 
 
     public function show(User $staff)
     {
         return response()->json($staff);
-    }
+    } 
 
     public function destroy(User $staff)
     {
         $staff->delete();
 
         return response('', 204);
-    }
+    } 
 
     public function destroyMultiple(MultipleDestroyRequest $request)
     {
