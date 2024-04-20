@@ -163,4 +163,28 @@ class AdminService
 
         return true;
     }
+
+    /**
+     * Xóa một nhà cung cấp
+     *
+     * @param int $supplierId
+     * @return bool
+     */
+    public static function deleteSupplier(int $supplierId)
+    {
+        $supplier = Supplier::find($supplierId);
+        if (!$supplier) {
+            return false;
+        }
+
+        // Xóa tất cả sản phẩm liên quan đến nhà cung cấp này
+        $products = Product::where('supplier_id', $supplierId)->get();
+        foreach ($products as $product) {
+            $product->delete();
+        }
+
+        $supplier->delete();
+
+        return true;
+    }
 }
