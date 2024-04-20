@@ -118,4 +118,27 @@ class CustomerService
 
         return $totalPrice;
     }
+
+    /**
+     * Áp dụng mã giảm giá
+     *
+     * @param float $totalPrice
+     * @param string $voucherType
+     * @param float $voucherAmount
+     * @return array
+     */
+    public static function applyVoucher(float $totalPrice, string $voucherType, float $voucherAmount)
+    {
+        if ($voucherType == 'direct') {
+            $discountPrice = $voucherAmount;
+            $finalPrice = $totalPrice - $discountPrice;
+
+            return [$discountPrice, $finalPrice];
+        }
+
+        $discountPrice = $totalPrice * $voucherAmount / 100;
+        $finalPrice = $totalPrice - $discountPrice;
+
+        return [$discountPrice, $finalPrice];
+    }
 }
