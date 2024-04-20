@@ -70,5 +70,62 @@ class AdminService
         return true;
     }
 
+    /**
+     * Tạo một danh mục sản phẩm mới
+     *
+     * @param string $name
+     * @return Category
+     */
+    public static function createCategory(string $name)
+    {
+        $category = new Category();
+        $category->name = $name;
+        $category->save();
 
+        return $category;
+    }
+
+    /**
+     * Cập nhật thông tin danh mục sản phẩm
+     *
+     * @param int $categoryId
+     * @param string $name
+     * @return bool
+     */
+    public static function updateCategory(int $categoryId, string $name)
+    {
+        $category = Category::find($categoryId);
+        if (!$category) {
+            return false;
+        }
+
+        $category->name = $name;
+        $category->save();
+
+        return true;
+    }
+
+    /**
+     * Xóa một danh mục sản phẩm
+     *
+     * @param int $categoryId
+     * @return bool
+     */
+    public static function deleteCategory(int $categoryId)
+    {
+        $category = Category::find($categoryId);
+        if (!$category) {
+            return false;
+        }
+
+        // Xóa tất cả sản phẩm thuộc danh mục này
+        $products = Product::where('category_id', $categoryId)->get();
+        foreach ($products as $product) {
+            $product->delete();
+        }
+
+        $category->delete();
+
+        return true;
+    }
 }
