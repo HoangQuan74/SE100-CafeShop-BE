@@ -104,4 +104,28 @@ class AdminService
 
         return true;
     }
+
+    /**
+     * Xóa một danh mục sản phẩm
+     *
+     * @param int $categoryId
+     * @return bool
+     */
+    public static function deleteCategory(int $categoryId)
+    {
+        $category = Category::find($categoryId);
+        if (!$category) {
+            return false;
+        }
+
+        // Xóa tất cả sản phẩm thuộc danh mục này
+        $products = Product::where('category_id', $categoryId)->get();
+        foreach ($products as $product) {
+            $product->delete();
+        }
+
+        $category->delete();
+
+        return true;
+    }
 }
