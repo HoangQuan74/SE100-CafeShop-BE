@@ -27,4 +27,29 @@ class AdminService
 
         return $product;
     }
+
+     /**
+     * Cập nhật thông tin sản phẩm
+     *
+     * @param int $productId
+     * @param array $data
+     * @return bool
+     */
+    public static function updateProduct(int $productId, array $data)
+    {
+        $product = Product::find($productId);
+        if (!$product) {
+            return false;
+        }
+
+        $product->name = $data['name'];
+        $product->description = $data['description'];
+        $product->unit_price = $data['unit_price'];
+        $product->category_id = $data['category_id'];
+        $product->supplier_id = $data['supplier_id'];
+        $product->save();
+
+        return true;
+    }
+
 }
