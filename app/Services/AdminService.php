@@ -70,5 +70,18 @@ class AdminService
         return true;
     }
 
+    /**
+     * Tạo một danh mục sản phẩm mới
+     *
+     * @param string $name
+     * @return Category
+     */
+    public static function createCategory(string $name)
+    {
+        $category = new Category();
+        $category->name = $name;
+        $category->save();
 
+        return $category;
+    }
 }
