@@ -41,4 +41,26 @@ class OrderService
 
         return true;
     }
+
+    /**
+     * Lấy danh sách sản phẩm bán chạy trong một khoảng thời gian
+     *
+     * @param string $startDate
+     * @param string $endDate
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getTopSellingProducts(string $startDate, string $endDate)
+    {
+        $products = DB::table('invoice_details')
+            ->join('products', 'invoice_details.product_id', '=', 'products.id')
+            ->join('invoices', 'invoice_details.invoice_id', '=', 'invoices.id')
+            ->select('products.name', DB::raw('SUM(invoice_details.quantity) as total_quantity'))
+            ->whereBetween('invoices.date', [$startDate, $endDate])
+            ->groupBy('products.name')
+            ->orderBy('total_quantity', 'desc')
+            ->get();
+
+        return $products;
+    }
+
 }
