@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class TrustRequestHosting
 {
-
     protected $headers =
         Request::HEADER_X_FORWARDED_FOR |
         Request::HEADER_X_FORWARDED_HOST |

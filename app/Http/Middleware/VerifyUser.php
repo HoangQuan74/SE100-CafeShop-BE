@@ -18,7 +18,7 @@ class VerifyUser
         /** @var \App\Models\User $user */
         $user = $request->user();
 
-        if (!$user) {
+        if (! $user) {
             return response(401);
         }
 

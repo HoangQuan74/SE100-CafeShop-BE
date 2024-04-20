@@ -51,7 +51,6 @@ class InvoiceController extends Controller
                 return response($data, 200);
             }
 
-
             $totalPrice = CartService::calculateCart($cart);
             [$discountPrice, $finalPrice] = CartService::applyVoucher($totalPrice, $voucherType, $voucherAmount);
 
