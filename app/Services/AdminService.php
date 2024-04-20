@@ -84,4 +84,24 @@ class AdminService
 
         return $category;
     }
+
+    /**
+     * Cập nhật thông tin danh mục sản phẩm
+     *
+     * @param int $categoryId
+     * @param string $name
+     * @return bool
+     */
+    public static function updateCategory(int $categoryId, string $name)
+    {
+        $category = Category::find($categoryId);
+        if (!$category) {
+            return false;
+        }
+
+        $category->name = $name;
+        $category->save();
+
+        return true;
+    }
 }
