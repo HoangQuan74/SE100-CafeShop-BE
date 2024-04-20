@@ -128,4 +128,16 @@ class AdminService
 
         return true;
     }
+
+    public static function createSupplier(array $data)
+    {
+        $supplier = new Supplier();
+        $supplier->name = $data['name'];
+        $supplier->address = $data['address'];
+        $supplier->phone = $data['phone'];
+        $supplier->email = $data['email'];
+        $supplier->save();
+
+        return $supplier;
+    }
 }
