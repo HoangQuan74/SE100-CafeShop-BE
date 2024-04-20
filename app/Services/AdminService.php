@@ -140,4 +140,27 @@ class AdminService
 
         return $supplier;
     }
+
+    /**
+     * Cập nhật thông tin nhà cung cấp
+     *
+     * @param int $supplierId
+     * @param array $data
+     * @return bool
+     */
+    public static function updateSupplier(int $supplierId, array $data)
+    {
+        $supplier = Supplier::find($supplierId);
+        if (!$supplier) {
+            return false;
+        }
+
+        $supplier->name = $data['name'];
+        $supplier->address = $data['address'];
+        $supplier->phone = $data['phone'];
+        $supplier->email = $data['email'];
+        $supplier->save();
+
+        return true;
+    }
 }
