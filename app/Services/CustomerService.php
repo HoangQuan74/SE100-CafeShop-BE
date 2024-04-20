@@ -141,4 +141,40 @@ class CustomerService
 
         return [$discountPrice, $finalPrice];
     }
+
+    /**
+     * Lưu chi tiết đơn hàng
+     *
+     * @param array $cart
+     * @param int $invoiceId
+     * @return void
+     */
+    public static function storeOrderDetails(array $cart, int $invoiceId)
+    {
+        $productIdList = [];
+
+        foreach ($cart as $pair) {
+            $productIdList[] = $pair['product_id'];
+        }
+
+        $productsPrice = Product::whereIn('id', $productIdList)->pluck('unit_price', 'id');
+        $productsName = Product::whereIn('id', $productIdList)->pluck('name', 'id');
+
+        $data = [];
+
+        foreach ($cart as $pair) {
+            $productId = $pair['product_id'];
+
+            $data[] = [
+                'invoice_id' => $invoiceId,
+                'product_id' => $productId,
+                'quantity' => $pair['quantity'],
+                'unit_price' => $productsPrice[$productId],
+                'product_name' => $productsName[$productId],
+            ];
+        }
+
+        InvoiceDetail::insert($data);
+    }
+
 }
