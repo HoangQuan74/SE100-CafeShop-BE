@@ -177,4 +177,19 @@ class CustomerService
         InvoiceDetail::insert($data);
     }
 
+    /**
+     * Lấy danh sách đơn hàng của một khách hàng
+     *
+     * @param int $customerId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getCustomerOrders(int $customerId)
+    {
+        $orders = Invoice::where('customer_id', $customerId)
+            ->with('invoiceDetails.products')
+            ->get();
+
+        return $orders;
+    }
+
 }
