@@ -187,4 +187,23 @@ class AdminService
 
         return true;
     }
+
+    /**
+     * Lấy danh sách đơn hàng trong một khoảng thời gian
+     *
+     * @param string $startDate
+     * @param string $endDate
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getOrdersInRange(string $startDate, string $endDate)
+    {
+        $orders = DB::table('invoices')
+            ->join('invoice_details', 'invoices.id', '=', 'invoice_details.invoice_id')
+            ->select('invoices.id', 'invoices.created_at', DB::raw('SUM(invoice_details.quantity * invoice_details.unit_price) as total_price'))
+            ->whereBetween('invoices.created_at', [$startDate, $endDate])
+            ->groupBy('invoices.id', 'invoices.created_at')
+            ->get();
+
+        return $orders;
+    }
 }
