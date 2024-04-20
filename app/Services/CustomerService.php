@@ -88,4 +88,34 @@ class CustomerService
 
         return $invoice;
     }
+
+     /**
+     * Tính tổng giá trị đơn hàng
+     *
+     * @param array $cart
+     * @return float
+     */
+    public static function calculateOrderTotal(array $cart)
+    {
+        $productIdList = [];
+
+        foreach ($cart as $pair) {
+            $productIdList[] = $pair['product_id'];
+        }
+
+        $products = Product::whereIn('id', $productIdList)->pluck('unit_price', 'id');
+
+        $totalPrice = 0;
+
+        foreach ($cart as $pair) {
+            $productId = $pair['product_id'];
+            $quantity = $pair['quantity'];
+
+            $unitPrice = $products[$productId];
+
+            $totalPrice += $unitPrice * $quantity;
+        }
+
+        return $totalPrice;
+    }
 }
