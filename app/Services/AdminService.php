@@ -52,4 +52,23 @@ class AdminService
         return true;
     }
 
+    /**
+     * Xóa một sản phẩm
+     *
+     * @param int $productId
+     * @return bool
+     */
+    public static function deleteProduct(int $productId)
+    {
+        $product = Product::find($productId);
+        if (!$product) {
+            return false;
+        }
+
+        $product->delete();
+
+        return true;
+    }
+
+
 }
