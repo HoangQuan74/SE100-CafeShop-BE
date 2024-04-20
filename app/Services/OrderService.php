@@ -63,4 +63,19 @@ class OrderService
         return $products;
     }
 
+    /**
+     * Tính doanh thu trong một khoảng thời gian
+     *
+     * @param string $startDate
+     * @param string $endDate
+     * @return float
+     */
+    public static function calculateRevenue(string $startDate, string $endDate)
+    {
+        $revenue = DB::table('invoices')
+            ->whereBetween('date', [$startDate, $endDate])
+            ->sum('final_price');
+
+        return $revenue;
+    }
 }
