@@ -21,4 +21,24 @@ class OrderService
             ->with('invoiceDetails.products', 'customer', 'staff')
             ->get();
     }
+
+     /**
+     * Cập nhật trạng thái đơn hàng
+     *
+     * @param int $orderId
+     * @param string $newStatus
+     * @return bool
+     */
+    public static function updateOrderStatus(int $orderId, string $newStatus)
+    {
+        $order = Invoice::find($orderId);
+        if (!$order) {
+            return false;
+        }
+
+        $order->status = $newStatus;
+        $order->save();
+
+        return true;
+    }
 }
