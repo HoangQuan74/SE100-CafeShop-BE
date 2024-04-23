@@ -51,4 +51,22 @@ class StaffService
 
         return true;
     }
+
+    /**
+     * Xóa một nhân viên
+     *
+     * @param int $staffId
+     * @return bool
+     */
+    public static function deleteStaff(int $staffId)
+    {
+        $staff = User::find($staffId);
+        if (!$staff) {
+            return false;
+        }
+
+        $staff->delete();
+
+        return true;
+    }
 }
