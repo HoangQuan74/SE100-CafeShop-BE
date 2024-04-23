@@ -69,4 +69,15 @@ class StaffService
 
         return true;
     }
+
+    /**
+     * Lấy danh sách nhân viên theo vai trò
+     *
+     * @param int $roleId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getStaffByRole(int $roleId)
+    {
+        return User::where('role_id', $roleId)->get();
+    }
 }
