@@ -80,4 +80,15 @@ class StaffService
     {
         return User::where('role_id', $roleId)->get();
     }
+
+    /**
+     * Lấy danh sách nhân viên theo quản lý
+     *
+     * @param int $managerId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getStaffByManager(int $managerId)
+    {
+        return User::where('manager_id', $managerId)->get();
+    }
 }
