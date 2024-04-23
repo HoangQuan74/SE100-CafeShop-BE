@@ -25,4 +25,30 @@ class StaffService
 
         return $staff;
     }
+
+    /**
+     * Cập nhật thông tin nhân viên
+     *
+     * @param int $staffId
+     * @param array $data
+     * @return bool
+     */
+    public static function updateStaff(int $staffId, array $data)
+    {
+        $staff = User::find($staffId);
+        if (!$staff) {
+            return false;
+        }
+
+        $staff->name = $data['name'];
+        $staff->email = $data['email'];
+        if (isset($data['password'])) {
+            $staff->password = Hash::make($data['password']);
+        }
+        $staff->role_id = $data['role_id'];
+        $staff->manager_id = $data['manager_id'] ?? null;
+        $staff->save();
+
+        return true;
+    }
 }
