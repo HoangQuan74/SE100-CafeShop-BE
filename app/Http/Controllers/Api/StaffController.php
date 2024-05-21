@@ -64,4 +64,20 @@ class StaffController extends Controller
 
         return response('Deleted successfully', 204);
     }
+
+     /**
+     * Reset password for a specific staff.
+     *
+     * @param UpdatePasswordRequest $request
+     * @param User $staff
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function resetPassword(UpdatePasswordRequest $request, User $staff)
+    {
+        $staff->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json(['message' => 'Password reset successfully']);
+    }
 }
