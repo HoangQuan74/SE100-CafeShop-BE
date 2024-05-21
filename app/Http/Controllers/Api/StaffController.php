@@ -94,4 +94,19 @@ class StaffController extends Controller
 
         return response()->json(['active' => $staff->active]);
     }
+
+    /**
+     * Assign a role to a staff.
+     *
+     * @param UpdateRoleRequest $request
+     * @param User $staff
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function assignRole(UpdateRoleRequest $request, User $staff)
+    {
+        $staff->role = $request->role;
+        $staff->save();
+
+        return response()->json(['role' => $staff->role]);
+    }
 }
