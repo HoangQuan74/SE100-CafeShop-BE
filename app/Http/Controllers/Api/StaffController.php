@@ -80,4 +80,18 @@ class StaffController extends Controller
 
         return response()->json(['message' => 'Password reset successfully']);
     }
+
+     /**
+     * Toggle active status of a staff.
+     *
+     * @param User $staff
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function toggleActiveStatus(User $staff)
+    {
+        $staff->active = !$staff->active;
+        $staff->save();
+
+        return response()->json(['active' => $staff->active]);
+    }
 }
