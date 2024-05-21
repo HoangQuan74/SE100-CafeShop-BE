@@ -83,4 +83,25 @@ class UserController extends Controller
         $invoices = Invoice::where('user_id', $user->id)->orderBy('date', 'desc')->paginate(10);
         return InvoiceResource::collection($invoices);
     }
+
+     /**
+     * Search users by name or email.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function search(Request $request)
+    {
+        $query = User::query();
+        
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->has('email')) {
+            $query->where('email', 'like', '%' . $request->input('email') . '%');
+        }
+
+        return UserResource::collection($query->orderBy('id', 'desc')->paginate(10));
+    }
 }
