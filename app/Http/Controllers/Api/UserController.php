@@ -104,4 +104,22 @@ class UserController extends Controller
 
         return UserResource::collection($query->orderBy('id', 'desc')->paginate(10));
     }
+
+    /**
+     * Update user information by admin.
+     *
+     * @param UpdateUserRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function adminUpdate(UpdateUserRequest $request, User $user)
+    {
+        $data = $request->validated();
+        if (isset($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        }
+        $user->update($data);
+
+        return response(new UserResource($user), 200);
+    }
 }
