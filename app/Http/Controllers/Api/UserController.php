@@ -71,4 +71,16 @@ class UserController extends Controller
 
         return response('', 204);
     }
+
+    /**
+     * Get invoices of a specific user.
+     *
+     * @param User $user
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function userInvoices(User $user)
+    {
+        $invoices = Invoice::where('user_id', $user->id)->orderBy('date', 'desc')->paginate(10);
+        return InvoiceResource::collection($invoices);
+    }
 }
