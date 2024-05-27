@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# SE100-CafeShop-BE
-=======
 # Laravel React Example Full Stack Application
 Example Application build with Laravel and React
 
@@ -53,4 +50,3 @@ Make sure you have environment setup properly. You will need PHP8.1, composer an
        - View detail: [GET] /admin/invoices/{id}
        - List, Add, Update, Delete User: [GET, POST, PATCH, DELETE] /admin/users (Quản lý nhân viên, user)
 5. Docs API
->>>>>>> master

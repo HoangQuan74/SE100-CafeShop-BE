@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
@@ -73,53 +75,15 @@ class UserController extends Controller
     }
 
     /**
-     * Get invoices of a specific user.
+     * Get the user profile based on the token.
      *
-     * @param User $user
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return \Illuminate\Http\Resources\UserResource
      */
-    public function userInvoices(User $user)
+    public function profile(Request $request)
     {
-        $invoices = Invoice::where('user_id', $user->id)->orderBy('date', 'desc')->paginate(10);
-        return InvoiceResource::collection($invoices);
-    }
-
-     /**
-     * Search users by name or email.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function search(Request $request)
-    {
-        $query = User::query();
-        
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
-
-        if ($request->has('email')) {
-            $query->where('email', 'like', '%' . $request->input('email') . '%');
-        }
-
-        return UserResource::collection($query->orderBy('id', 'desc')->paginate(10));
-    }
-
-    /**
-     * Update user information by admin.
-     *
-     * @param UpdateUserRequest $request
-     * @param User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function adminUpdate(UpdateUserRequest $request, User $user)
-    {
-        $data = $request->validated();
-        if (isset($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        }
-        $user->update($data);
-
-        return response(new UserResource($user), 200);
+        /** @var \App\Models\User $user */
+        // $user = Auth::user();
+        $user = $request->user();
+        return response($user, 200);
     }
 }
