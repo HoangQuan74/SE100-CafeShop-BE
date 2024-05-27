@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MultipleDestroyRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
+use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {
@@ -16,19 +18,56 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
+    // public function store(StoreProductRequest $request)
+    // {
+    //     $image = $request->file('image');
+    //     if ($image) {
+    //         $fileName = time() . $request->input('name') . '.' . $image->extension();
+    //         $storedPath = $image->move('images/products/', $fileName);
+    //         $data = array_merge($request->all(), ['image' => $storedPath]);
+    //         $product = Product::create($data);
+
+    //         return response()->json($product)->setStatusCode(201);
+    //     }
+
+    //     $product = Product::create($request->all());
+
+    //     return response()->json($product)->setStatusCode(201);
+    // }
+
+    // public function update(StoreProductRequest $request, Product $product)
+    // {
+    //     $image = $request->file('image');
+    //     if ($image) {
+    //         $fileName = time() . $request->input('name') . '.' . $image->extension();
+    //         $storedPath = $image->move('images/products/', $fileName);
+    //         $data = array_merge($request->all(), ['image' => $storedPath]);
+    //         $product->update($data);
+
+    //         return response()->json($product)->setStatusCode(201);
+    //     }
+
+    //     $product->update($request->all());
+
+    //     return response()->json($product);
+    // }
     public function store(StoreProductRequest $request)
     {
         $image = $request->file('image');
         if ($image) {
-            $fileName = time().$request->input('name').'.'.$image->extension();
-            $storedPath = $image->move('images/products/', $fileName);
+            $fileName = time() . $request->input('name') . '.' . $image->extension();
+            $destinationPath = 'images/products/';
+            $image->move($destinationPath, $fileName);
+
+            $storedPath = $destinationPath . $fileName;
+
             $data = array_merge($request->all(), ['image' => $storedPath]);
             $product = Product::create($data);
 
             return response()->json($product)->setStatusCode(201);
         }
 
-        $product = Product::create($request->all());
+        $product = Product::create($request->validated());
 
         return response()->json($product)->setStatusCode(201);
     }
@@ -37,22 +76,25 @@ class ProductController extends Controller
     {
         $image = $request->file('image');
         if ($image) {
-            $fileName = time().$request->input('name').'.'.$image->extension();
-            $storedPath = $image->move('images/products/', $fileName);
+            $fileName = time() . $request->input('name') . '.' . $image->extension();
+            $destinationPath = 'images/products/';
+            $image->move($destinationPath, $fileName);
+
+            $storedPath = $destinationPath . $fileName;
+
             $data = array_merge($request->all(), ['image' => $storedPath]);
             $product->update($data);
 
             return response()->json($product)->setStatusCode(201);
         }
 
-        $product->update($request->all());
+        $product->update($request->validated());
 
-        return response()->json($product);
+        return response()->json($product)->setStatusCode(201);
     }
-
     public function show(Product $product)
     {
-        return response()->json($product);
+        return response()->json($product)->setStatusCode(200);
     }
 
     public function destroy(Product $product)
